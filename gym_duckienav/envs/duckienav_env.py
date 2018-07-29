@@ -5,14 +5,25 @@ from gym.envs.toy_text import discrete
 import numpy as np
 
 MAP = [
-    "+---------+",
-    "|R: | : :G|",
-    "| : : : : |",
-    "| : : : : |",
-    "| | : | : |",
-    "|Y| : |B: |",
-    "+---------+",
+    "+-----------------+",
+    "|O|O| : : : : :G: |",
+    "|O|O| |O| |O| |O| |",
+    "|O| : |O| |O| |O| |",
+    "| : |O|O| : : : : |",
+    "| |O|O|O|O|O| |O| |",
+    "| : :R: : : : :O: |",
+    "| |O|O|O| |O|O|O| |",
+    "| |O| : : |O| : : |",
+    "| |O| |O|O|O|B|O| |",
+    "| : : : : : : |O| |",
+    "| |O| |O| |O| |O| |",
+    "| : : : : : : |O| |",
+    "| |O| |O| |O|O|O| |",
+    "| : : :Y: : : : : |",
+    "+-----------------+",
 ]
+
+ACTIONS = ["South", "North", "East", "West", "Pickup", "Dropoff"]
 
 class DuckieNavEnv(discrete.DiscreteEnv):
     """
@@ -33,18 +44,18 @@ class DuckieNavEnv(discrete.DiscreteEnv):
     def __init__(self):
         self.desc = np.asarray(MAP,dtype='c')
 
-        self.locs = locs = [(0,0), (0,4), (4,0), (4,3)]
+        self.locs = locs = [(5,2), (0,7), (13,3), (8,6)]
 
-        nS = 500
-        nR = 5
-        nC = 5
+        nS = 2520
+        nR = 14 
+        nC = 9
         maxR = nR-1
         maxC = nC-1
         isd = np.zeros(nS)
         nA = 6
         P = {s : {a : [] for a in range(nA)} for s in range(nS)}
-        for row in range(5):
-            for col in range(5):
+        for row in range(nR):
+            for col in range(nC):
                 for passidx in range(5):
                     for destidx in range(4):
                         state = self.encode(row, col, passidx, destidx)
@@ -84,9 +95,9 @@ class DuckieNavEnv(discrete.DiscreteEnv):
         discrete.DiscreteEnv.__init__(self, nS, nA, P, isd)
 
     def encode(self, taxirow, taxicol, passloc, destidx):
-        # (5) 5, 5, 4
+        # (14) 9, 5, 4
         i = taxirow
-        i *= 5
+        i *= 9 
         i += taxicol
         i *= 5
         i += passloc
@@ -100,10 +111,10 @@ class DuckieNavEnv(discrete.DiscreteEnv):
         i = i // 4
         out.append(i % 5)
         i = i // 5
-        out.append(i % 5)
-        i = i // 5
+        out.append(i % 9)
+        i = i // 9 
         out.append(i)
-        assert 0 <= i < 5
+        assert 0 <= i < 14 
         return reversed(out)
 
     def render(self, mode='human'):
