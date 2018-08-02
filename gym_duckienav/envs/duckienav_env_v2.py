@@ -29,7 +29,7 @@ nR = 14
 nC = 9
 maxR = nR-1
 maxC = nC-1
-class DuckieNavEnv(discrete.DiscreteEnv):
+class DuckieNavEnvV2(discrete.DiscreteEnv):
     """
     The Taxi Problem
     from "Hierarchical Reinforcement Learning with the MAXQ Value Function Decomposition"
