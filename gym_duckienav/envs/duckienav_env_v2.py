@@ -138,7 +138,7 @@ class DuckieNavEnvV2(discrete.DiscreteEnv):
 
     def reset(self):
         while True:        
-            s = super(DuckieNavEnv,self).reset()
+            s = super(DuckieNavEnvV2,self).reset()
             p = list(self.decode(s))
             if(self.taxi_loc(p[0],p[1]) != b"O"):
                 return s
