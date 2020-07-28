@@ -10,3 +10,8 @@ register(
     entry_point='gym_duckienav.envs:DuckieNavEnvV2'
 )
 
+register(
+    id='DeployNav-v0',
+    entry_point='gym_duckienav.envs:CommNavEnv'
+)
+
